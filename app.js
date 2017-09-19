@@ -1,10 +1,14 @@
 'use strict';
 
-const express = require('express'),
-    app = express(),
-    bodyParser = require('body-parser'),
-    morgan = require('morgan'),
-    ps = require('ps-node');
+const bodyParser = require('body-parser');
+const express = require('express');
+const morgan = require('morgan');
+const ps = require('ps-node');
+const _ = require("lodash");
+
+const app = express();
+
+app.set('env', process.env.NODE_ENV || 'development');
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -43,7 +47,21 @@ app.use('/api/bitcoin', require('./bitcoin_api'));
 app.use('/api/lightning', require('./lightning_api'));
 
 app.use((err, req, res, next) => {
-    res.status(500).send({error: err});
+    if (_.isError(err)) {
+        let error = 'server_error';
+
+        if (req.app.get('env') === 'development') {
+            error = {
+                message: err.toString(),
+                stackTrace: err.stack
+            }
+        }
+
+        res.status(500).send({error});
+        return;
+    }
+
+    res.status(400).send({error: err});
 });
 
 app.use((req, res) => {

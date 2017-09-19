@@ -1,5 +1,5 @@
 const config = {
-	lightningDir: "~/lightning/daemon/lightning-cli --lightning-dir '/tmp/lnd_dir0'",
+	lightningRoot: '/tmp/lnd_dir0',
 	credentials: {
         host: 'localhost',
         port: 19001,
