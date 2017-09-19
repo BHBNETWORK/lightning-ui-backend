@@ -6,6 +6,7 @@ const net = require('net');
 const _ = require('lodash');
 
 class LightningClient {
+    // TODO: add a reconnection algorithm, possibly using https://en.wikipedia.org/wiki/Exponential_backoff
     constructor(rpcPath = '~/.lightning') {
         rpcPath = path.join(rpcPath, '/lightning-rpc');
         console.log(`Connecting to ${rpcPath}`);
@@ -70,6 +71,110 @@ class LightningClient {
                     _self.client.write(JSON.stringify(sendObj));
                 });
             });
+    }
+
+    dev_blockheight() {
+        return this.call('dev-blockheight');
+    }
+
+    getnodes() {
+        return this.call('getnodes');
+    }
+
+    getroute(id, msatoshi, riskfactor) {
+        return this.call('getroute', [id, msatoshi, riskfactor]);
+    }
+
+    getchannels() {
+        return this.call('getchannels');
+    }
+
+    invoice(msatoshi, label, r = null) {
+        return this.call('invoice', [msatoshi, label, r]);
+    }
+
+    listinvoice(label = null) {
+        return this.call('listinvoice', [label]);
+    }
+
+    delinvoice(label = null) {
+        return this.call('delinvoice', [label]);
+    }
+
+    waitanyinvoice(label = null) {
+        return this.call('waitanyinvoice', [label]);
+    }
+
+    waitinvoice(label) {
+        return this.call('waitinvoice', [label]);
+    }
+
+    help() {
+        return this.call('help');
+    }
+
+    stop() {
+        return this.call('stop');
+    }
+
+    getlog(level = null) {
+        return this.call('getlog', [level]);
+    }
+
+    dev_rhash(secret) {
+        return this.call('dev-rhash', [secret]);
+    }
+
+    dev_crash() {
+        return this.call('dev-crash');
+    }
+
+    getinfo() {
+        return this.call('getinfo');
+    }
+
+    sendpay(route, rhash) {
+        return this.call('sendpay', [route, rhash]);
+    }
+
+    connect(host, port, id) {
+        return this.call('connect', [host, port, id]);
+    }
+
+    dev_fail(id) {
+        return this.call('dev-fail', [id]);
+    }
+
+    getpeers(level = null) {
+        return this.call('getpeers', [level]);
+    }
+
+    fundchannel(id, satoshis) {
+        return this.call('fundchannel', [id, satoshis]);
+    }
+
+    close(id) {
+        return this.call('close', [id]);
+    }
+
+    dev_ping(peerid, len, pongbytes) {
+        return this.call('dev-ping', [peerid, len, pongbytes]);
+    }
+
+    withdraw(satoshi, destination) {
+        return this.call('withdraw', [satoshi, destination]);
+    }
+
+    newaddr() {
+        return this.call('newaddr');
+    }
+
+    addfunds(tx) {
+        return this.call('addfunds', [tx]);
+    }
+
+    listfunds() {
+        return this.call('listfunds');
     }
 }
 
