@@ -1,0 +1,6 @@
+./lightningd \
+--port 8334 \
+--lightning-dir "/tmp/lnd_dir0" \
+--log-level debug \
+--network regtest
+
