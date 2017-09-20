@@ -32,5 +32,13 @@
     "@types/joi": "^9.0.33",
     "@types/moment": "^2.13.0",
     "@types/pg-promise": "0.0.28"
+  },
+  "xo": {
+    "esnext": true,
+    "space": false,
+    "rules": {},
+    "envs": [
+      "node"
+    ]
   }
 }
