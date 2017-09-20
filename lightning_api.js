@@ -53,7 +53,7 @@ router.get('/getnewaddress', (req, res) => {
 
 /*
   open a channel
-  curl -X POST -H 'Content-Type: application/json' -d '{"ip":"localhost","port":"8899","rawtx":"copy from get raw transcation"}' http://localhost:9000/api/lightning/openchannel -s | jq
+  curl -X POST -H 'Content-Type: application/json' -d '{"ip":"localhost","port":"8899","nodeid":"<nodeid>","amount":10000}' http://localhost:9000/api/lightning/openchannel -s | jq
 */
 router.post('/openchannel', (req, res) => {
     return client.connect(req.body.ip, req.body.port, req.body.nodeid)
@@ -62,20 +62,29 @@ router.post('/openchannel', (req, res) => {
 });
 
 /*
+  add funds
+  curl -X POST -H 'Content-Type: application/json' -d '{"rawtx":"<raw transaction hex>"}' http://localhost:9000/api/lightning/addfunds -s | jq
+*/
+router.post('/addfunds', (req, res) => {
+    return client.addfunds(req.body.rawtx)
+        .then(result => res.send(result));
+});
+
+/*
   close a channel
-  curl -X POST -H 'Content-Type: application/json' -d '{"node":"node string"}' http://localhost:9000/api/lightning/closechannel -s | jq
+  curl -X POST -H 'Content-Type: application/json' -d '{"nodeid":""}' http://localhost:9000/api/lightning/closechannel -s | jq
 */
 router.post('/closechannel', (req, res) => {
-    return client.close(req.body.node)
+    return client.close(req.body.nodeid)
         .then(result => res.send(result));
 });
 
 /*
   get route
-  curl -X POST -H 'Content-Type: application/json' -d '{"nodeId":"","amount":"","riskfactor":""}' http://localhost:9000/api/lightning/getroute -s | jq
+  curl -X POST -H 'Content-Type: application/json' -d '{"nodeid":"","amount":"","riskfactor":""}' http://localhost:9000/api/lightning/getroute -s | jq
 */
 router.post('/getroute', (req, res) => {
-    return client.getroute(req.body.nodeId, req.body.amount, req.body.riskfactor)
+    return client.getroute(req.body.nodeid, req.body.amount, req.body.riskfactor)
         .then(result => res.send(result));
 });
 
@@ -99,9 +108,10 @@ router.get('/listinvoice', (req, res) => {
 
 /*
   send pay
-  curl -X POST -H 'Content-Type: application/json' -d '{"route":"","hash":""}' http://localhost:9000/api/lightning/sendpay -s | jq
+  curl -X POST -H 'Content-Type: application/json' -d '{"route":[...],"hash":""}' http://localhost:9000/api/lightning/sendpay -s | jq
 */
 router.post('/sendpay', (req, res) => {
+    console.log(req.body.route, req.body.hash);
     return client.sendpay(req.body.route, req.body.hash)
         .then(result => res.send(result));
 });
