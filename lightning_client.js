@@ -5,24 +5,45 @@ const net = require('net');
 
 const _ = require('lodash');
 
+function resolveHome(filepath) {
+    if (filepath[0] === '~') {
+        return path.join(process.env.HOME, filepath.slice(1));
+    }
+
+    return filepath;
+}
+
 class LightningClient {
-    // TODO: add a reconnection algorithm, possibly using https://en.wikipedia.org/wiki/Exponential_backoff
     constructor(rpcPath = '~/.lightning') {
         rpcPath = path.join(rpcPath, '/lightning-rpc');
+        rpcPath = resolveHome(rpcPath);
+
         console.log(`Connecting to ${rpcPath}`);
+
+        this.rpcPath = rpcPath;
+        this.reconnectWait = 0.5;
+        this.reconnectTimeout = null;
 
         const _self = this;
 
         this.client = net.createConnection(rpcPath);
-        this.clientConnectionPromise = new Promise((resolve, reject) => {
+        this.clientConnectionPromise = new Promise((resolve) => {
             _self.client.on('connect', function () {
                 console.log(`Lightning client connected`);
+                _self.reconnectWait = 1;
                 resolve();
             });
 
-            _self.client.on('error', function () {
-                console.log(`Lightning client connection error`);
-                reject();
+            _self.client.on('end', function () {
+                console.log('Lightning client connection closed, reconnecting');
+                _self.increaseWaitTime();
+                _self.reconnect();
+            });
+
+            _self.client.on('error', function (error) {
+                console.log(`Lightning client connection error`, error);
+                _self.increaseWaitTime();
+                _self.reconnect();
             });
         });
 
@@ -37,6 +58,28 @@ class LightningClient {
             _self.waitingFor[dataObject.id].call(_self, dataObject);
             delete _self.waitingFor[dataObject.id];
         });
+    }
+
+    increaseWaitTime() {
+        if (this.reconnectWait >= 16) {
+            this.reconnectWait = 16;
+        } else {
+            this.reconnectWait *= 2;
+        }
+    }
+
+    reconnect() {
+        const _self = this;
+
+        if (this.reconnectTimeout) {
+            return;
+        }
+
+        this.reconnectTimeout = setTimeout(() => {
+            console.log('Trying to reconnect...');
+            _self.client.connect(_self.rpcPath);
+            _self.reconnectTimeout = null;
+        }, this.reconnectWait * 1000);
     }
 
     call(method, args = []) {
