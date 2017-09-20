@@ -1,4 +1,4 @@
-# Sephirot Lightning API
+# Lightning UI - Lightning API
 
 - [/api/lightning/getinfo](#get-info)
 - [/api/lightning/getpeers](#get-peers)
