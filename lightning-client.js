@@ -51,14 +51,52 @@ class LightningClient {
 		this.waitingFor = {};
 
 		this.client.on('data', data => {
-			const dataObject = JSON.parse(data);
-			if (!_.isFunction(_self.waitingFor[dataObject.id])) {
-				return;
+			_.each(LightningClient.splitJSON(data.toString()), str => {
+				let dataObject = {};
+				try {
+					dataObject = JSON.parse(str);
+				} catch (err) {
+					return;
+				}
+
+				if (!_.isFunction(_self.waitingFor[dataObject.id])) {
+					return;
+				}
+
+				_self.waitingFor[dataObject.id].call(_self, dataObject);
+				delete _self.waitingFor[dataObject.id];
+			});
+		});
+	}
+
+	static splitJSON(str) {
+		const parts = [];
+
+		let openCount = 0;
+		let lastSplit = 0;
+
+		for (let i = 0; i < str.length; i++) {
+			if (i > 0 && str.charCodeAt(i - 1) === 115) { // 115 => backslash, ignore this character
+				continue;
 			}
 
-			_self.waitingFor[dataObject.id].call(_self, dataObject);
-			delete _self.waitingFor[dataObject.id];
-		});
+			if (str[i] === '{') {
+				openCount++;
+			} else if (str[i] === '}') {
+				openCount--;
+
+				if (openCount === 0) {
+					const start = lastSplit;
+					const end = i + 1 === str.length ? undefined : i + 1;
+
+					parts.push(str.slice(start, end));
+
+					lastSplit = end;
+				}
+			}
+		}
+
+		return parts.length === 0 ? [str] : parts;
 	}
 
 	increaseWaitTime() {
