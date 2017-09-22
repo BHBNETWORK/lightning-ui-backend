@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const ps = require('ps-node');
 const _ = require('lodash');
 
+const LightningError = require('./lightning-error');
+
 const app = express();
 
 app.set('env', process.env.NODE_ENV || 'development');
@@ -43,11 +45,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(morgan('common'));
-app.use('/api/bitcoin', require('./bitcoin_api'));
-app.use('/api/lightning', require('./lightning_api'));
+app.use('/api/bitcoin', require('./bitcoin-api'));
+app.use('/api/lightning', require('./lightning-api'));
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-	if (_.isError(err)) {
+	if (_.isError(err) && !(err instanceof LightningError)) {
 		let error = 'server_error';
 
 		if (req.app.get('env') === 'development') {
@@ -59,6 +62,8 @@ app.use((err, req, res, next) => {
 
 		res.status(500).send({error});
 		return;
+	} else if (err instanceof LightningError) {
+		err = err.message;
 	}
 
 	res.status(400).send({error: err});

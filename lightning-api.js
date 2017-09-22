@@ -3,7 +3,7 @@
 const router = require('express-promise-router')();
 const config = require('./config');
 
-const LightningClient = require('./lightning_client');
+const LightningClient = require('./lightning-client');
 
 const client = new LightningClient(config.lightningRoot);
 /*
