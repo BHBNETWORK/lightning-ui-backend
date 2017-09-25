@@ -7,6 +7,7 @@
 - [/api/lightning/getnewaddress](#generate-new-address)
 - [/api/lightning/openchannel](#open-channel)
 - [/api/lightning/addfunds](#add-funds)
+- [/api/lightning/fundchannel](#fund-channel)
 - [/api/lightning/closechannel](#close-channel)
 - [/api/lightning/getroute](#get-route)
 - [/api/lightning/createinvoice](#create-invoice)
@@ -125,6 +126,24 @@
    "outputs":1,
    "satoshis":100000000
 }
+```
+
+## fund channel
+- path: /api/lightning/fundchannel
+- request: POST
+- params: {"nodeid":"<node id>", "amount": 1000}
+- response: JSON
+```json
+{}
+```
+
+## connect
+- path: /api/lightning/connect
+- request: POST
+- params: {"nodeid":"<node id>", "ip": "127.0.0.1", "port":10000}
+- response: JSON
+```json
+{}
 ```
 
 ## close channel

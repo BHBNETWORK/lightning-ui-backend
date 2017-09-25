@@ -71,6 +71,33 @@ router.post('/addfunds', (req, res) => {
 });
 
 /*
+  Move funds into a channel
+  curl -X POST -H 'Content-Type: application/json' -d '{"nodeid":"<node id>", "amount": 1000}' http://localhost:9000/api/lightning/fundchannel -s | jq
+*/
+router.post('/fundchannel', (req, res) => {
+    return client.fundchannel(req.body.nodeid, req.body.amount)
+        .then(result => res.send(result));
+});
+
+/*
+  Connect to a node
+  curl -X POST -H 'Content-Type: application/json' -d '{"ip":"localhost","port":"8899","nodeid":"<nodeid>"}' http://localhost:9000/api/lightning/connect -s | jq
+*/
+router.post('/connect', (req, res) => {
+    return client.connect(req.body.ip, req.body.port, req.body.nodeid)
+        .then(result => res.send(result));
+});
+
+/*
+  List the available funds
+  curl http://localhost:9000/api/lightning/listfunds -s | jq
+*/
+router.get('/listfunds', (req, res) => {
+    return client.listfunds()
+        .then(result => res.send(result));
+});
+
+/*
   Close a channel
   curl -X POST -H 'Content-Type: application/json' -d '{"nodeid":""}' http://localhost:9000/api/lightning/closechannel -s | jq
 */
@@ -81,10 +108,10 @@ router.post('/closechannel', (req, res) => {
 
 /*
   Get route
-  curl -X POST -H 'Content-Type: application/json' -d '{"nodeid":"","amount":"","riskfactor":""}' http://localhost:9000/api/lightning/getroute -s | jq
+  curl -X POST -H 'Content-Type: application/json' -d '{"nodeid":"","amount":"","riskFactor":""}' http://localhost:9000/api/lightning/getroute -s | jq
 */
 router.post('/getroute', (req, res) => {
-	return client.getroute(req.body.nodeid, req.body.amount, req.body.riskfactor)
+	return client.getroute(req.body.nodeid, req.body.amount, req.body.riskFactor)
         .then(result => res.send(result));
 });
 
