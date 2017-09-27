@@ -134,6 +134,24 @@ router.get('/listinvoice', (req, res) => {
 });
 
 /*
+  Delete an invoice
+  curl -S DELETE http://localhost:9000/api/lightning/invoice -s | jq
+*/
+router.delete('/invoice/:label', (req, res) => {
+    return client.delinvoice(req.params.label)
+        .then(result => res.send(result));
+});
+
+/*
+  Withdraw
+  curl -S DELETE http://localhost:9000/api/lightning/invoice -s | jq
+*/
+router.post('/withdraw', (req, res) => {
+    return client.withdraw(req.body.amount, req.body.address)
+        .then(result => res.send(result));
+});
+
+/*
   Send pay
   curl -X POST -H 'Content-Type: application/json' -d '{"route":[...],"hash":""}' http://localhost:9000/api/lightning/sendpay -s | jq
 */

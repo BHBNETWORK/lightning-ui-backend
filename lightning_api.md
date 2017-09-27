@@ -12,6 +12,8 @@
 - [/api/lightning/getroute](#get-route)
 - [/api/lightning/createinvoice](#create-invoice)
 - [/api/lightning/listinvoice](#list-invoices)
+- [/api/lightning/invoice/{label}](#delete-invoice)
+- [/api/lightning/withdraw](#withdraw)
 - [/api/lightning/sendpay](#send-payment)
 
 ---
@@ -199,6 +201,26 @@
       "complete":false
    }
 ]
+```
+## delete invoice
+- path: /api/lightning/invoice/{label}
+- request: DELETE
+- params: {"amount":1000,"address":"<address>"}
+- response: JSON
+```json
+{}
+```
+
+## withdraw
+- path: /api/lightning/withdraw
+- request: POST
+- params: {"amount":1000,"address":"<address>"}
+- response: JSON
+```json
+{
+  "tx":"...",
+  "txid":"..."
+}
 ```
 
 ## send payment

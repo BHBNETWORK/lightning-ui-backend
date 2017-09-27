@@ -243,7 +243,7 @@ class LightningClient {
 		return this.call('dev-ping', [peerid, len, pongbytes]);
 	}
 
-	withdraw(satoshi, destination) {
+	withdraw(destination, satoshi) {
 		return this.call('withdraw', [satoshi, destination]);
 	}
 
