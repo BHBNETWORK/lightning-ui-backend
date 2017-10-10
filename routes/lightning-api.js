@@ -1,9 +1,9 @@
 'use strict';
 
 const router = require('express-promise-router')();
-const config = require('./config');
+const config = require('../config');
 
-const LightningClient = require('./lightning-client');
+const LightningClient = require('../lightning-client');
 
 const client = new LightningClient(config.lightningRoot);
 /*
@@ -75,7 +75,7 @@ router.post('/addfunds', (req, res) => {
   curl -X POST -H 'Content-Type: application/json' -d '{"nodeid":"<node id>", "amount": 1000}' http://localhost:9000/api/lightning/fundchannel -s | jq
 */
 router.post('/fundchannel', (req, res) => {
-    return client.fundchannel(req.body.nodeid, req.body.amount)
+	return client.fundchannel(req.body.nodeid, req.body.amount)
         .then(result => res.send(result));
 });
 
@@ -84,7 +84,7 @@ router.post('/fundchannel', (req, res) => {
   curl -X POST -H 'Content-Type: application/json' -d '{"ip":"localhost","port":"8899","nodeid":"<nodeid>"}' http://localhost:9000/api/lightning/connect -s | jq
 */
 router.post('/connect', (req, res) => {
-    return client.connect(req.body.ip, req.body.port, req.body.nodeid)
+	return client.connect(req.body.ip, req.body.port, req.body.nodeid)
         .then(result => res.send(result));
 });
 
@@ -93,7 +93,7 @@ router.post('/connect', (req, res) => {
   curl http://localhost:9000/api/lightning/listfunds -s | jq
 */
 router.get('/listfunds', (req, res) => {
-    return client.listfunds()
+	return client.listfunds()
         .then(result => res.send(result));
 });
 
@@ -138,7 +138,7 @@ router.get('/listinvoice', (req, res) => {
   curl -S DELETE http://localhost:9000/api/lightning/invoice -s | jq
 */
 router.delete('/invoice/:label', (req, res) => {
-    return client.delinvoice(req.params.label)
+	return client.delinvoice(req.params.label)
         .then(result => res.send(result));
 });
 
@@ -147,7 +147,7 @@ router.delete('/invoice/:label', (req, res) => {
   curl -S DELETE http://localhost:9000/api/lightning/invoice -s | jq
 */
 router.post('/withdraw', (req, res) => {
-    return client.withdraw(req.body.amount, req.body.address)
+	return client.withdraw(req.body.amount, req.body.address)
         .then(result => res.send(result));
 });
 

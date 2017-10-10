@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const bitcoin = require('bitcoin');
 
-const config = require('./config');
+const config = require('../config');
 
 // Bitcoin client
 const client = new bitcoin.Client(config.credentials);
