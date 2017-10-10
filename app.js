@@ -14,7 +14,7 @@ app.set('env', process.env.NODE_ENV || 'development');
 
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 });
@@ -46,8 +46,9 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(morgan('common'));
-app.use('/api/bitcoin', require('./bitcoin-api'));
-app.use('/api/lightning', require('./lightning-api'));
+app.use('/api/bitcoin', require('./routes/bitcoin-api'));
+app.use('/api/lightning', require('./routes/lightning-api'));
+app.use('/api/settings', require('./routes/settings-api'));
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
