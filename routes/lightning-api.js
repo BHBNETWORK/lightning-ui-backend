@@ -147,7 +147,7 @@ router.delete('/invoice/:label', (req, res) => {
   curl -S DELETE http://localhost:9000/api/lightning/invoice -s | jq
 */
 router.post('/withdraw', (req, res) => {
-	return client.withdraw(req.body.amount, req.body.address)
+	return client.withdraw(req.body.address, req.body.amount)
         .then(result => res.send(result));
 });
 
