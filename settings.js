@@ -24,7 +24,13 @@ const defaultSettings = {
 	backend: 'c-lightning'
 };
 
+let settingsCache = null;
+
 function getSettings() {
+    if (settingsCache !== null) {
+        return Promise.resolve(settingsCache);
+    }
+
 	return new Promise((resolve, reject) => {
 		db.find({name: 'settingsObject'}, (err, docs) => {
 			if (err) {
@@ -33,7 +39,8 @@ function getSettings() {
 			}
 
 			const loadedSettings = docs[0] || {settings: {}};
-			resolve(_.defaultsDeep(loadedSettings.settings, defaultSettings));
+			settingsCache = _.defaultsDeep(loadedSettings.settings, defaultSettings);
+			resolve(settingsCache);
 		});
 	});
 }
@@ -56,6 +63,8 @@ function updateSettings(newParams) {
 				return;
 			}
 
+			// invalidates the cache
+            settingsCache = null;
 			resolve({error: null});
 		});
 	});
