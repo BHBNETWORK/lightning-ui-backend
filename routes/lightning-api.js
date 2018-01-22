@@ -20,7 +20,7 @@ router.get('/getinfo', (req, res) => {
   curl http://localhost:9000/api/lightning/listpeers -s | jq
 */
 router.get('/listpeers', (req, res) => {
-	return client.getpeers()
+	return client.listpeers()
         .then(result => res.send(result));
 });
 
@@ -29,7 +29,7 @@ router.get('/listpeers', (req, res) => {
   curl http://localhost:9000/api/lightning/listnodes -s | jq
 */
 router.get('/listnodes', (req, res) => {
-	return client.getnodes()
+	return client.listnodes()
         .then(result => res.send(result));
 });
 
@@ -38,7 +38,7 @@ router.get('/listnodes', (req, res) => {
   curl http://localhost:9000/api/lightning/listchannels -s | jq
 */
 router.get('/listchannels', (req, res) => {
-	return client.getchannels()
+	return client.listchannels()
         .then(result => res.send(result));
 });
 
