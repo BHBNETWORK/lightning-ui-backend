@@ -1,9 +1,9 @@
 # Lightning UI - Lightning API
 
 - [/api/lightning/getinfo](#get-info)
-- [/api/lightning/getpeers](#get-peers)
-- [/api/lightning/getnodes](#get-nodes)
-- [/api/lightning/getchannels](#get-channels)
+- [/api/lightning/listpeers](#list-peers)
+- [/api/lightning/listnodes](#list-nodes)
+- [/api/lightning/listchannels](#list-channels)
 - [/api/lightning/getnewaddress](#generate-new-address)
 - [/api/lightning/openchannel](#open-channel)
 - [/api/lightning/addfunds](#add-funds)
@@ -11,7 +11,7 @@
 - [/api/lightning/closechannel](#close-channel)
 - [/api/lightning/getroute](#get-route)
 - [/api/lightning/createinvoice](#create-invoice)
-- [/api/lightning/listinvoice](#list-invoices)
+- [/api/lightning/listinvoices](#list-invoices)
 - [/api/lightning/invoice/{label}](#delete-invoice)
 - [/api/lightning/withdraw](#withdraw)
 - [/api/lightning/sendpay](#send-payment)
@@ -32,8 +32,8 @@
 }
 ```
 
-## get peers
-- path: /api/lightning/getpeers
+## list peers
+- path: /api/lightning/listpeers
 - request: GET
 - response: JSON
 ```json
@@ -54,8 +54,8 @@
 }
 ```
 
-## get nodes
-- path: /api/lightning/getnodes
+## list nodes
+- path: /api/lightning/listnodes
 - request: GET
 - response: JSON
 ```json
@@ -77,8 +77,8 @@
 }
 ```
 
-## get channels
-- path: /api/lightning/getchannels
+## list channels
+- path: /api/lightning/listchannels
 - request: GET
 - response: JSON
 ```json
@@ -189,7 +189,7 @@
 ```
 
 ## list invoices
-- path: /api/lightning/listinvoice
+- path: /api/lightning/listinvoices
 - request: GET
 - response: JSON
 ```json

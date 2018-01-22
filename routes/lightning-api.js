@@ -17,27 +17,27 @@ router.get('/getinfo', (req, res) => {
 
 /*
   Get peers
-  curl http://localhost:9000/api/lightning/getpeers -s | jq
+  curl http://localhost:9000/api/lightning/listpeers -s | jq
 */
-router.get('/getpeers', (req, res) => {
+router.get('/listpeers', (req, res) => {
 	return client.getpeers()
         .then(result => res.send(result));
 });
 
 /*
   Get nodes
-  curl http://localhost:9000/api/lightning/getnodes -s | jq
+  curl http://localhost:9000/api/lightning/listnodes -s | jq
 */
-router.get('/getnodes', (req, res) => {
+router.get('/listnodes', (req, res) => {
 	return client.getnodes()
         .then(result => res.send(result));
 });
 
 /*
   Get channels
-  curl http://localhost:9000/api/lightning/getchannels -s | jq
+  curl http://localhost:9000/api/lightning/listchannels -s | jq
 */
-router.get('/getchannels', (req, res) => {
+router.get('/listchannels', (req, res) => {
 	return client.getchannels()
         .then(result => res.send(result));
 });
@@ -128,8 +128,8 @@ router.post('/createinvoice', (req, res) => {
   List invoice
   curl http://localhost:9000/api/lightning/listinvoice -s | jq
 */
-router.get('/listinvoice', (req, res) => {
-	return client.listinvoice()
+router.get('/listinvoices', (req, res) => {
+	return client.listinvoices()
         .then(result => res.send(result));
 });
 
