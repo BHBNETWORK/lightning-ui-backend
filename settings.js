@@ -27,9 +27,9 @@ const defaultSettings = {
 let settingsCache = null;
 
 function getSettings() {
-    if (settingsCache !== null) {
-        return Promise.resolve(settingsCache);
-    }
+	if (settingsCache !== null) {
+		return Promise.resolve(settingsCache);
+	}
 
 	return new Promise((resolve, reject) => {
 		db.find({name: 'settingsObject'}, (err, docs) => {
@@ -49,7 +49,7 @@ function updateSettings(newParams) {
 	const validNewParamsKeys = _.intersection(_.keys(newParams), _.keys(defaultSettings));
 	const cleanNewParams = {};
 
-    // Make sure the new value is valid according to the validation rules
+	// Make sure the new value is valid according to the validation rules
 	_.each(validNewParamsKeys, key => {
 		if (!_.isFunction(validationRules[key]) || validationRules[key].call(null, newParams[key]) === true) {
 			cleanNewParams[key] = newParams[key];
@@ -63,8 +63,8 @@ function updateSettings(newParams) {
 				return;
 			}
 
-			// invalidates the cache
-            settingsCache = null;
+			// Invalidates the cache
+			settingsCache = null;
 			resolve({error: null});
 		});
 	});

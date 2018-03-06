@@ -12,7 +12,7 @@ const client = new LightningClient(config.lightningRoot);
 */
 router.get('/getinfo', (req, res) => {
 	return client.getinfo()
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -21,7 +21,7 @@ router.get('/getinfo', (req, res) => {
 */
 router.get('/listpeers', (req, res) => {
 	return client.listpeers()
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -30,7 +30,7 @@ router.get('/listpeers', (req, res) => {
 */
 router.get('/listnodes', (req, res) => {
 	return client.listnodes()
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -39,7 +39,7 @@ router.get('/listnodes', (req, res) => {
 */
 router.get('/listchannels', (req, res) => {
 	return client.listchannels()
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -48,7 +48,7 @@ router.get('/listchannels', (req, res) => {
 */
 router.get('/getnewaddress', (req, res) => {
 	return client.newaddr()
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -57,8 +57,8 @@ router.get('/getnewaddress', (req, res) => {
 */
 router.post('/openchannel', (req, res) => {
 	return client.connect(req.body.ip, req.body.port, req.body.nodeid)
-        .then(() => client.fundchannel(req.body.nodeid, req.body.amount))
-        .then(result => res.send(result));
+		.then(() => client.fundchannel(req.body.nodeid, req.body.amount))
+		.then(result => res.send(result));
 });
 
 /*
@@ -67,7 +67,7 @@ router.post('/openchannel', (req, res) => {
 */
 router.post('/addfunds', (req, res) => {
 	return client.addfunds(req.body.rawtx)
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -76,7 +76,7 @@ router.post('/addfunds', (req, res) => {
 */
 router.post('/fundchannel', (req, res) => {
 	return client.fundchannel(req.body.nodeid, req.body.amount)
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -85,7 +85,7 @@ router.post('/fundchannel', (req, res) => {
 */
 router.post('/connect', (req, res) => {
 	return client.connect(req.body.ip, req.body.port, req.body.nodeid)
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -94,7 +94,7 @@ router.post('/connect', (req, res) => {
 */
 router.get('/listfunds', (req, res) => {
 	return client.listfunds()
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -103,7 +103,7 @@ router.get('/listfunds', (req, res) => {
 */
 router.post('/closechannel', (req, res) => {
 	return client.close(req.body.nodeid)
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -112,7 +112,7 @@ router.post('/closechannel', (req, res) => {
 */
 router.post('/getroute', (req, res) => {
 	return client.getroute(req.body.nodeid, req.body.amount, req.body.riskFactor)
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -121,7 +121,7 @@ router.post('/getroute', (req, res) => {
 */
 router.post('/createinvoice', (req, res) => {
 	return client.invoice(req.body.amount, req.body.label)
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -130,7 +130,7 @@ router.post('/createinvoice', (req, res) => {
 */
 router.get('/listinvoices', (req, res) => {
 	return client.listinvoices()
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -139,7 +139,7 @@ router.get('/listinvoices', (req, res) => {
 */
 router.delete('/invoice/:label', (req, res) => {
 	return client.delinvoice(req.params.label)
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -148,7 +148,7 @@ router.delete('/invoice/:label', (req, res) => {
 */
 router.post('/withdraw', (req, res) => {
 	return client.withdraw(req.body.address, req.body.amount)
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 /*
@@ -158,7 +158,7 @@ router.post('/withdraw', (req, res) => {
 router.post('/sendpay', (req, res) => {
 	console.log(req.body.route, req.body.hash);
 	return client.sendpay(req.body.route, req.body.hash)
-        .then(result => res.send(result));
+		.then(result => res.send(result));
 });
 
 module.exports = router;

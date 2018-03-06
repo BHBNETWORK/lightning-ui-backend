@@ -28,7 +28,7 @@ ps.lookup({
 		throw new Error(err);
 	}
 
-	if (resultList.length < 1) {
+	if (resultList.length === 0) {
 		console.log('Lightningd is not running.');
 	}
 
@@ -64,7 +64,8 @@ app.use((err, req, res, next) => {
 
 		res.status(500).send({error});
 		return;
-	} else if (err instanceof LightningError) {
+	}
+	if (err instanceof LightningError) {
 		err = err.message;
 	}
 
