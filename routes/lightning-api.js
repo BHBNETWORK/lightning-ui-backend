@@ -166,8 +166,8 @@ router.post('/sendpay', (req, res) => {
   curl -X POST -H 'Content-Type: application/json' -d '{"payreq": "", "msatoshi": null, "description": null, "riskfactor": 1, "maxfeepercent": 0.5}' http://localhost:9000/api/lightning/pay -s | jq
 */
 router.post('/pay', (req, res) => {
-        return client.pay(req.body.payreq, req.body.msatoshi, req.body.description, req.body.riskfactor, req.body.maxfeepercent)
-                .then(result => res.send(result));
+	return client.pay(req.body.payreq, req.body.msatoshi, req.body.description, req.body.riskfactor, req.body.maxfeepercent)
+		.then(result => res.send(result));
 });
 
 module.exports = router;
