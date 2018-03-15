@@ -1,12 +1,5 @@
 const config = {
 	lightningRoot: '/tmp/lnd_dir0',
-	credentials: {
-        host: 'localhost',
-        port: 19001,
-        user: "satoshi",
-        pass: "nakamoto",
-        timeout: 30000
-    }
 };
 
 module.exports = config;
