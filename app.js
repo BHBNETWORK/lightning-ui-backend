@@ -46,7 +46,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(morgan('common'));
-app.use('/api/bitcoin', require('./routes/bitcoin-api'));
 app.use('/api/lightning', require('./routes/lightning-api'));
 app.use('/api/settings', require('./routes/settings-api'));
 
