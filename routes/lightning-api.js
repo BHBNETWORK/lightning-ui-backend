@@ -16,6 +16,22 @@ router.get('/getinfo', (req, res) => {
 });
 
 /*
+  List all configuration options, or with [config], just that one.
+  curl http://localhost:9000/api/lightning/listconfigs -s | jq
+  curl http://localhost:9000/api/lightning/listconfigs/rgb -s | jq
+*/
+
+router.get('/listconfigs', (req, res) => {
+	return client.listconfigs()
+		.then(result => res.send(result));
+});
+
+router.get('/listconfigs/:config', (req, res) => {
+	return client.listconfigs(req.params.config)
+		.then(result => res.send(result));
+});
+
+/*
   Get peers
   curl http://localhost:9000/api/lightning/listpeers -s | jq
 */
