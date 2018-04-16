@@ -1,6 +1,8 @@
 # Lightning UI - Lightning API
 
 - [/api/lightning/getinfo](#get-info)
+- [/api/lightning/listconfigs](#list-configs)
+- [/api/lightning/listconfigs/{config}](#list-configs-config)
 - [/api/lightning/listpeers](#list-peers)
 - [/api/lightning/listnodes](#list-nodes)
 - [/api/lightning/listchannels](#list-channels)
@@ -32,6 +34,28 @@
 }
 ```
 
+## list configs
+- path: /api/lightning/listconfigs
+- request: GET
+- response: JSON
+```json
+{
+  "# version": "v0.5.2-2016-11-21-2611-gccfd7d61",
+  "port": 9735,
+  "rgb": "e52b50",
+  …
+  "dev-broadcast-interval": 60000
+}
+```
+## list configs config
+- path: /api/lightning/listconfigs/{config}
+- request: GET
+- response: JSON
+```json
+{
+  "rgb": "e52b50",
+}
+```
 ## list peers
 - path: /api/lightning/listpeers
 - request: GET
